@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<style>
+  #one:hover{
+    color: red;
+    text-decoration: none;
+  }
+  #two:hover{
+    color: red;
+    text-decoration: none;
+  }
+  #two{
+    color: white;
+  }
+  #one{
+    color: white;
+  }
+* {
+  box-sizing: border-box;
+ 
+}
+.row{
+  padding: 20px;
+  padding-left: 40px;
+}
+
+/* Add a gray background color with some padding */
+body {
+  font-family: Arial;
+  /* padding: 20px; */
+  background: #f1f1f1;
+}
+
+/* Header/Blog Title */
+.header {
+  padding: 50px;
+  font-size: 40px;
+  text-align: center;
+  background: white;
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {   
+  float: left;
+  width: 75%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+.rightx{
+display:flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+top: 36%;
+left: 80vw;
+}
+
+/* Add a card effect for articles */
+.card {
+   background-color: white;
+   padding: 20px;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   display: flex;
+   align-items: center;
+   /* margin: 20px; */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
+table{
+  border: 1px solid black;
+  
+  
+}
+th,td{
+  border: 1px solid black;
+}
+.two{
+
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+}
+</style>
+</head>
+<body>
+  <nav class="navbar navbar-light bg-dark  justify-content-between">
+    <a class="navbar-brand " id="one" href="./../index.html">Home</a>
+    
+    <div class="form-inline">
+      <a class="navbar-brand " id="two" href="./../allBlogLink.html">All Blogs</a>
+    </div>
+  </nav>
+<div class="header mt-2">
+  <h2>Feature Scaling</h2>
+ 
+</div>
+
+
+<div class="row">
+  <div class="leftcolumn">
+    <div class="card">
+        <h2>Topic covered:</h2>
+        <li>Feature scaling?</li>
+        <li>Need of feature scaling</li>
+        <li>Places where we don't need scaling</li>
+        <li>Standardization or Z-score</li>
+        <li>Min-Max scaling</li>
+        <div><img src='Standardization-of-a-two-component-bivariate-Gaussian-mixture-model-with-outliers-a.png' height=300px /></div>
+        <h2>Introduction</h2>
+        <p> A machine learning model needs dataset to get trained on it. A dataset has lots of limitiations 
+            which can make model perform poorly on unseen data. 
+            Therefore, before feeding the data to model during training, 
+            it require lot of preprocessing. One of the most important step in 
+            preprocessing is feature scaling. We will know about what is feature scaling and two common techniques Standardization and Min-Max</p>
+        <h2> What is feature scaling?</h2>
+        <p> A dataset has features which can be vary hightly on scale, 
+            range and units. For example, consider a feature length which can be in meter,
+             foot, kilometer, etc. Length can be 1km or 1000m. If we calculate euclidean distance on length,
+              it will vary more when length is in meter as compare to length in km because same magnitude appears
+               to be larger in m. Why we are talking about euclidean distance because it is mostly used in ML models.
+                One of the model is k-nearest neighbours. Higher magnitude can make the model more dependent on it. To remove and resolve this problem,
+                 we can think of bringing the feature to same order of magnitude. This is called Feature Scaling.  </p>
+
+        <h2>When we don't need scaling?</h2>
+        <p>
+            One of the ML model which is scale invariant is tree based algorithm. Without going deep and considering information gain or impurity, it is simple to think
+             as some condition based dependence X_i>some_value? So in this case it doesn't really matter if X_i is in m or km. 
+        </p>
+        <h2> When scaling is recommended?</h2>
+        <p>
+            <li>
+                K-nearest neighbours and K-means is euclidean distance based algorithm. It is sensitive to magnitude of feature, hence it is always recommended to use scaling  before training. 
+            </li>
+            <li>
+                Parameters/Weight based models that are optimised by gradient based approaches like Support Vector Machine(SVM), 
+                Logistic regression, Neural NEtwork etc require scaling so that 
+                weights are not updated faster with respect to feature with higher order of magnitude.
+            </li>
+            <li>
+                Models like PCA, LDA  are also sensitive to feature magnitude order and depend on variance. PCA is one where scaling is strongly recommended. 
+                In PCA we are interested in the components that maximize the variance. 
+                PCA might determine that the direction of maximal variance more closely corresponds with the feature that have high variance, if this high variance is due to unscaling then PCA gives skews directions. We will get more clarity from <a ref="">here</a> about how scaling help.
+            </li>
+        </p>
+        <h2>
+            Standardization
+        </h2>
+        <p>
+            Standardization is simple feature scaling technique where values are replaced by z-score.<br>
+            z-score = (X_i-mu_s)/sigma_S<br>
+
+            where mu_s is sampling mean and sigma_S is sampling standard deviation.
+            <br><br>
+            By doing this, we make new value to be around zero centric mean and unit variance.<br>
+            mu_new = 0<br>
+            sigma_new = 1 <br>
+        </p>
+        <h2>
+            Min-max Scaling
+        </h2>
+        <P>
+            Alternative to  z-score normalisation, Data is scaled in range from 0 to 1 usually.<br>
+            x_new = (X - X_min)/(X_max - X_min)<br>
+            Here we endup with smaller standard deviation and supress the effect of outliers.
+
+        </P>
+        <h2>Demonstration of scaling on PCA using Sklearn libraries.</h2>
+        <P>
+            The dataset used is the Wine Dataset available at UCI. This dataset has continuous features that are heterogeneous in scale due to differing properties that they measure (i.e alcohol content, and malic acid). 
+            To test whether effect of scaling, we  can use classifier over PCA and analyse its performance. We have taken accuracy to analyse the performance. The classifier used is k-nearest neighbours.
+            <div>
+                <strong>Performance of scaled and unscaled PCA(dim=2) data using k-nearest neighbours as classifier</strong></div>
+                <div class="two">
+            <table>
+                <tr>
+                    <th>data </th>
+                    <th>Accuracy</th>
+                </tr>
+                <tr>
+                    <td>Unscaled data</td>
+                    <td>61.11%</td>
+                </tr>
+                <tr>
+                    <td>Scaled data</td>
+                    <td>96.30%</td>
+                </tr>
+            </table>
+          </div>
+            We can see from table that scaled outperforms unscaled data.<br>
+            We can also  note the difference from Plot defined below.
+            <img src = "download (3).png"/>
+            <div><strong>2D plot using first and second Principal Components for both unscaled and scaled data</strong></div>
+        </P>
+        <h2>
+            Conclusions
+        </h2>
+        <p>
+            <li>
+                From demonstration, it is clear that feature scaling is useful.
+            </li>
+            <li>
+                When in doubt, it is always recommended to use standardization. It will not hurt the performance atleast.
+            </li>
+            <li>
+                If there are outliers in sample, it will make the sampling mean(mu_s) high which is incorrect and give false i. So it is always recommended to remove the outlier before applying min-max or standardization. 
+                For removing outliers there are lot of information present on internet so one who is willing to explore can always find some good blogs.
+            </li>
+         </p>
+    </div>
+
+    <div>
+        <h>Reference</h>
+        <br>
+        <a href="https://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html">Importance of Feature Scaling(scikit-learn)</a>
+        <br>
+    </div>
+
+  
+    
+    <div class="card">
+      <h2>
+        From
+      </h2>
+      <p>Swyam Prakash Singh</p>
+      <p>ML enthusiast</p>
+    </div>
+ 
+</div>
+
+</body>
+</html>
