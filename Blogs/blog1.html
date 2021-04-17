@@ -121,7 +121,7 @@ th,td{
     </div>
   </nav>
 <div class="header mt-2">
-  <h2>Feature Scaling</h2>
+  <h2>Convolution on Graphs(spectral Domains)</h2>
  
 </div>
 
@@ -130,31 +130,70 @@ th,td{
   <div class="leftcolumn">
     <div class="card">
         <h2>Topic covered:</h2>
-        <li>Feature scaling?</li>
-        <li>Need of feature scaling</li>
-        <li>Places where we don't need scaling</li>
-        <li>Standardization or Z-score</li>
-        <li>Min-Max scaling</li>
+        <li>Introduction</li>
+        <li>Spectral Domains</li>
+        <li>Convolutional Graph Neural Networks</li>
+        <li>Spectral CNN</li>
+        <li>ChebNets or Chebyshev Spectral CNN</li>
+        <li>CayleyNets</li>
+        <Li>GCN</Li>
+        <li>Special Points on GCN</li>
+        <li>Some results and analysis</li>
+        <li>Problem with spectral Domains</li>
+        <li>Conclusions</li>
         <div><img src='Standardization-of-a-two-component-bivariate-Gaussian-mixture-model-with-outliers-a.png' height=300px /></div>
+        <div>
+            <h2>Note</h2>
+            <p>This post includes only basic graph convolution algorithms. It donot include applications of graphs and other algorithms. </p>
+        </div>
         <h2>Introduction</h2>
-        <p> A machine learning model needs dataset to get trained on it. A dataset has lots of limitiations 
-            which can make model perform poorly on unseen data. 
-            Therefore, before feeding the data to model during training, 
-            it require lot of preprocessing. One of the most important step in 
-            preprocessing is feature scaling. We will know about what is feature scaling and two common techniques Standardization and Min-Max</p>
-        <h2> What is feature scaling?</h2>
-        <p> A dataset has features which can be vary hightly on scale, 
-            range and units. For example, consider a feature length which can be in meter,
-             foot, kilometer, etc. Length can be 1km or 1000m. If we calculate euclidean distance on length,
-              it will vary more when length is in meter as compare to length in km because same magnitude appears
-               to be larger in m. Why we are talking about euclidean distance because it is mostly used in ML models.
-                One of the model is k-nearest neighbours. Higher magnitude can make the model more dependent on it. To remove and resolve this problem,
-                 we can think of bringing the feature to same order of magnitude. This is called Feature Scaling.  </p>
-
-        <h2>When we don't need scaling?</h2>
+        <p> The  great success of Neural Networks for pattern recognition and data mininghas made the researchers to use it in areas like feature engineering, classification etc. 
+            Deep architectures like CNN and RNN has revolutionized their use in every domainin which they can be used like text, images, video, signal etc. 
+            CNN brought great success on image analysis. The grid structure of image make CNN to exploit local connectivity, translational
+             invariance and shifting to produce meaningful embeddings(low dimensional features) of that image. 
+             The growth in computational power and availability of big data are  also behind success story of deeplearning architectures.
+        </p>
         <p>
-            One of the ML model which is scale invariant is tree based algorithm. Without going deep and considering information gain or impurity, it is simple to think
-             as some condition based dependence X_i>some_value? So in this case it doesn't really matter if X_i is in m or km. 
+            Researchers thought of using  convolution(CNN) on non-grid, irregular structures like graphs. As most ML algorithms needs euclidean distance as similarity notion.
+            Same notion can't be utilised in graphs as it has relative positions.
+            Motivated by CNN, an image can also be thought as special case of graphs where pixel are connected to adjacent pixels.
+        </p>
+        <p>
+            In graph convolution, one may think as weighted average of node's neighbourhood information. In this 
+            post, we will go through graph convolution which has origin in spectral domains.
+        </p>
+        <h2> Spectral Domains</h2>
+        <p>Spectral based methods have solid backing of mathematical foundation in graph signal processing.
+             It assumes that graph is undirected. It uses graph signals and eigen vectors  of graph Laplacian matrix. 
+             The Global structure can be exploit with spectrum of graph Laplacian to generalize convolution operator.
+             </p>
+        <p>Mathematically Laplacian has these 3 different forms:
+             <ul>
+                 <li>
+                     1
+                 </li>
+                 <li>
+                     2
+                 </li>
+                 <li>
+                     3
+                 </li>
+             </ul>
+        </p>
+        <p>
+            Ideal behind using spectral domains is Convolution is easy in signal domain. One application where it is used predominantly is spectral clustering. 
+            We will look into it in detail in some other post. 
+            One can go through this paper by <a href ="https://arxiv.org/abs/0711.0189">Luxburg</a> for more details.  
+        </p>
+
+        <h2>Convolutional Graph Neural Networks</h2>
+        <p>
+            As in above paragraph we have different mathematical definitions for graph 
+            Laplacian matrix. For simplicity take <br>
+            L = <br>
+            this is symmetrical Laplacian matrix, also a positive semidefinite matrix.<br>
+            By diagonalization L = UDU^T
+            <T></T>
         </p>
         <h2> When scaling is recommended?</h2>
         <p>
