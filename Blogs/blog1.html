@@ -32,6 +32,9 @@
     margin: 0 auto;
     max-width: 100%;
 }
+.reference {
+    border: 4px solid red;
+}
 .image.captioned h3, .figure p {
     background-color: #fff;
     display: block;
@@ -43,6 +46,11 @@
     font-weight: normal;
     text-align: center;
     max-width: 75%;
+}
+h2 {
+    border: 1px solid black;
+    background: #545b62;
+    color: white;
 }
 
 /* Add a gray background color with some padding */
@@ -121,13 +129,13 @@ table{
   
 }
 th,td{
-  border: 1px solid black;
+  border: 1.5px solid skyblue;
 }
 .two{
-
   margin-top: 2%;
   margin-bottom: 2%;
 }
+
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
@@ -156,7 +164,7 @@ th,td{
     </div>
   </nav>
 <div class="header mt-2">
-  <h2>Evolution of Convolution on Graphs(spectral Domains)</h2>
+  <h1>Evolution of Convolution on Graphs(spectral Domains)</h1>
  
 </div>
 
@@ -521,24 +529,31 @@ th,td{
 
     </div>
 
-    <div>
-        <h>Reference</h>
-        <br>
+    <div class= 'card'>
+        <h2>Reference</h2>
+        <ul>
+        <li>
         <a href="https://arxiv.org/abs/0711.0189">
             A Tutorial on Spectral Clustering
-            </a> by Luxburg.
-        <br>
-        <a href ="https://arxiv.org/abs/1312.6203" >Spectral Network and Deep locally connected network on Graph</a> by Bruna.
-        <br>
+             by Luxburg.</a>
+            </li>
+            <li>
+        <a href ="https://arxiv.org/abs/1312.6203" >Spectral Network and Deep locally connected network on Graph by Bruna.</a> 
+    </li>
+    <li>
         <a href = "https://arxiv.org/pdf/1609.02907.pdf">GCN by Thomas Kipf</a>
-        <br>
-        <a href = "https://arxiv.org/pdf/1902.07153.pdf"> SGC(Simplifying-GCN) </a> by Wu.
-        <br>
+    </li>
+    <li>
+        <a href = "https://arxiv.org/pdf/1902.07153.pdf"> SGC(Simplifying-GCN) by Wu.</a> 
+    </li>
+    <li>
         <a href ="https://arxiv.org/abs/1901.00596"> A Comprehensive Survey on Graph Neural
-            Networks</a> by Z. Wu
-        <br>
+            Networks by Z. Wu</a> 
+        </li>
+        <li>
         <a href="https://arxiv.org/pdf/1606.09375.pdf">Convolutional Neural Networks on Graphs
-            with Fast Localized Spectral Filtering</a> by Michaël Defferrard
+            with Fast Localized Spectral Filtering by Michaël Defferrard</a> </li>
+        </ul>
     </div>
 
   
