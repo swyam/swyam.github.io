@@ -27,6 +27,23 @@
   padding: 20px;
   padding-left: 40px;
 }
+.img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+.image.captioned h3, .figure p {
+    background-color: #fff;
+    display: block;
+    padding: 1em;
+    box-shadow: 0px 0.0375em 0.125em 0px rgb(0 0 0 / 15%);
+    margin: 1em auto 1.5em auto;
+    text-transform: none;
+    font-size: 0.9em;
+    font-weight: normal;
+    text-align: center;
+    max-width: 75%;
+}
 
 /* Add a gray background color with some padding */
 body {
@@ -82,6 +99,10 @@ left: 80vw;
   display: table;
   clear: both;
 }
+.captioned{
+    border: 1px solid red;
+    margin-top: 10px;
+}
 
 /* Footer */
 .footer {
@@ -111,6 +132,15 @@ th,td{
   }
 }
 </style>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+<script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+      tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+      "HTML-CSS": {
+        linebreaks: { automatic: true, width: "container" }          
+      }              
+   });
+</script>
 </head>
 <body>
   <nav class="navbar navbar-light bg-dark  justify-content-between">
@@ -139,9 +169,11 @@ th,td{
         <Li>GCN</Li>
         <li>Special Points on GCN</li>
         <li>Some results and analysis</li>
-        <li>Problem with spectral Domains</li>
+        <li>Problems with spectral domains</li>
         <li>Conclusions</li>
-        <!-- <div><img src='Standardization-of-a-two-component-bivariate-Gaussian-mixture-model-with-outliers-a.png' height=300px /></div> -->
+        <div><img  class = "img-fluid" src='./blog1/gcn_web.png' alt = 'Multi-layer Graph Convolutional Network (GCN) with first-order filters.' />
+        <p class = 'captioned'>Multi-layer Graph Convolutional Network (GCN) with first-order filters.<br>
+        Image taken from blog <a href = "http://tkipf.github.io/graph-convolutional-networks/">"Graph convolution network by Kipf"</a></p></div>
         <div>
             <h2>Note</h2>
             <p>This post includes only basic graph convolution algorithms. It donot include applications of graphs and other algorithms. </p>
@@ -169,15 +201,43 @@ th,td{
              </p>
         <p>Mathematically Laplacian has these 3 different forms:
              <ul>
-                 <li>
-                     1
+                 <li> The unnormalized graph Laplacian matrix is defined as <br>
+                     <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <mrow><mi>L</mi><mo>=</mo><mi>D</mi><mo>-</mo><mi>A</mi></mrow></math>
                  </li>
-                 <li>
-                     2
+                 <li> The normalized graph Laplacian symmetric matrix is defined as <br>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <mrow><msub><mrow><mi>L</mi></mrow><mrow><mrow><mi>s</mi><mi>y</mi><mi>m</mi></mrow></mrow></msub><mo>=</mo><msup><mrow><mi>D</mi></mrow><mrow><mrow><mo>-</mo><mn>1</mn><mo>/</mo><mn>2</mn></mrow></mrow></msup><mi>L</mi><msup><mrow><mi>D</mi></mrow><mrow><mrow><mo>-</mo><mn>1</mn><mo>/</mo><mn>2</mn></mrow></mrow></msup><mo>=</mo><mi>I</mi><mo>-</mo><msup><mrow><mi>D</mi></mrow><mrow><mrow><mo>-</mo><mn>1</mn><mo>/</mo><mn>2</mn></mrow></mrow></msup><mi>A</mi><msup><mrow><mi>D</mi></mrow><mrow><mrow><mo>-</mo><mn>1</mn><mo>/</mo><mn>2</mn></mrow></mrow></msup></mrow></math>
                  </li>
-                 <li>
-                     3
+                 <li>The normalized graph Laplacian matrix based on random walk is defined as <br>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <mrow><msub><mrow><mi>L</mi></mrow><mrow><mrow><mi>r</mi><mi>w</mi></mrow></mrow></msub><mo>=</mo><msup><mrow><mi>D</mi></mrow><mrow><mrow><mo>-</mo><mn>1</mn></mrow></mrow></msup><mi>L</mi><mo>=</mo><mi>I</mi><mo>-</mo><msup><mrow><mi>D</mi></mrow><mrow><mrow><mo>-</mo><mn>1</mn></mrow></mrow></msup><mi>A</mi></mrow></math>
                  </li>
+             </ul>
+             A is Adjacency matrix(may be weighted or unweighed matrix).<br>
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow><msub><mrow><mi>A</mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow></msub><mo>=</mo><mfenced open='{' close=''><mtable><mtr><mtd><mrow><mn>1</mn></mrow></mtd><mtd><mrow><mi>edge exists between node i and node j</mi></mrow></mtd></mtr><mtr><mtd><mrow><mn>0</mn></mrow></mtd><mtd><mrow><mi>otherwise</mi></mrow></mtd></mtr></mtable></mfenced></mrow><mrow></mrow></math>
+            D is Degree matrix, also diagonal matrix defined<br>
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow><msub><mrow><mi>D</mi></mrow><mrow><mrow><mi>i</mi></mrow></mrow></msub><mo>=</mo><mo>&#8721;</mo><mrow><msubsup><mrow></mrow><mrow><mrow><mi>j</mi><mo>=</mo><mn>0</mn></mrow></mrow><mrow><mrow><mi>n</mi><mo>-</mo><mn>1</mn></mrow></mrow></msubsup><msub><mrow><mi>A</mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow></msub></mrow></mrow></math>
+             <h6>Some properties of L, L<sub>sym</sub> and L<sub>rw</sub> are :</h6>
+             <ul>
+                 <li>for every vector <math xmlns="http://www.w3.org/1998/Math/MathML">
+                    <mrow><mi>f</mi><mo>&#8712;</mo><msup><mrow><mi>R</mi></mrow><mrow><mrow><mi>n</mi></mrow></mrow></msup></mrow></math> we have <br>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                        <mrow><msup><mrow><mi>f</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><mi>L</mi><mi>f</mi><mo>=</mo><mfrac linethickness="1"><mrow><mrow><mn>1</mn></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#8721;</mo><mrow><msubsup><mrow></mrow><mrow><mrow><mi>i</mi><mi>,</mi><mi>j</mi><mo>=</mo><mn>1</mn></mrow></mrow><mrow><mrow><mi>n</mi></mrow></mrow></msubsup><msub><mrow><mi>A</mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow></msub></mrow><msup><mrow> <mfenced open='('  close=')' ><mrow><msub><mrow><mi>f</mi></mrow><mrow><mi>i</mi></mrow></msub><mo>-</mo><msub><mrow><mi>f</mi></mrow><mrow><mi>j</mi></mrow></msub></mrow></mfenced></mrow><mrow><mn>2</mn></mrow></msup></mrow></math>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                            <mrow><msup><mrow><mi>f</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><msub><mrow><mi>L</mi></mrow><mrow><mrow><mi>s</mi><mi>y</mi><mi>m</mi></mrow></mrow></msub><mi>f</mi><mo>=</mo><mfrac linethickness="1"><mrow><mrow><mn>1</mn></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#8721;</mo><mrow><msubsup><mrow></mrow><mrow><mrow><mi>i</mi><mi>,</mi><mi>j</mi><mo>=</mo><mn>1</mn></mrow></mrow><mrow><mrow><mi>n</mi></mrow></mrow></msubsup><msub><mrow><mi>A</mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow></msub></mrow><msup><mrow> <mfenced open='('  close=')' ><mrow><mfrac linethickness="1"><mrow><mrow><msub><mrow><mi>f</mi></mrow><mrow><mi>i</mi></mrow></msub></mrow></mrow><mrow><mrow><msqrt><mrow><mrow><msub><mrow><mi>d</mi></mrow><mrow><mi>i</mi></mrow></msub></mrow></mrow></msqrt></mrow></mrow></mfrac><mo>-</mo><mfrac linethickness="1"><mrow><mrow><msub><mrow><mi>f</mi></mrow><mrow><mi>j</mi></mrow></msub></mrow></mrow><mrow><mrow><msqrt><mrow><mrow><msub><mrow><mi>d</mi></mrow><mrow><mi>j</mi></mrow></msub></mrow></mrow></msqrt></mrow></mrow></mfrac></mrow></mfenced></mrow><mrow><mn>2</mn></mrow></msup></mrow></math>                </li>
+                <li>
+                    L is symmetric and positive semi definite.
+                </li>
+                <li>
+                    Smallest eigen value of L is 0 and corresponding eigen vector is 1 vector.
+                </li>
+                <li>
+                    Multiplicity k of eigen value 0 of L, L<sub>sym</sub>, L<sub>rw</sub> is equal to number of connected component in the graph.
+                </li>
+                
              </ul>
         </p>
         <p>
@@ -190,15 +250,167 @@ th,td{
         <p>
             As in above paragraph we have different mathematical definitions for graph 
             Laplacian matrix. For simplicity take <br>
-            L = <br>
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow><msup><mrow><mi>f</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><msub><mrow><mi>L</mi></mrow><mrow><mrow></mrow></mrow></msub><mi>f</mi><mo>=</mo><mfrac linethickness="1"><mrow><mrow><mn>1</mn></mrow></mrow><mrow><mrow><mn>2</mn></mrow></mrow></mfrac><mo>&#8721;</mo><mrow><msubsup><mrow></mrow><mrow><mrow><mi>i</mi><mi>,</mi><mi>j</mi><mo>=</mo><mn>1</mn></mrow></mrow><mrow><mrow><mi>n</mi></mrow></mrow></msubsup><msub><mrow><mi>A</mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow></msub></mrow><msup><mrow> <mfenced open='('  close=')' ><mrow><mfrac linethickness="1"><mrow><mrow><msub><mrow><mi>f</mi></mrow><mrow><mi>i</mi></mrow></msub></mrow></mrow><mrow><mrow><msqrt><mrow><mrow><msub><mrow><mi>d</mi></mrow><mrow><mi>i</mi></mrow></msub></mrow></mrow></msqrt></mrow></mrow></mfrac><mo>-</mo><mfrac linethickness="1"><mrow><mrow><msub><mrow><mi>f</mi></mrow><mrow><mi>j</mi></mrow></msub></mrow></mrow><mrow><mrow><msqrt><mrow><mrow><msub><mrow><mi>d</mi></mrow><mrow><mi>j</mi></mrow></msub></mrow></mrow></msqrt></mrow></mrow></mfrac></mrow></mfenced></mrow><mrow><mn>2</mn></mrow></msup></mrow></math> 
+
+
             this is symmetrical Laplacian matrix, also a positive semidefinite matrix.<br>
-            By diagonalization L = UDU^T
-            <T></T>
+            By diagonalization 
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow><mi>L</mi><mo>=</mo><mi>U</mi><mi>&#923;</mi><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><mi>where </mi><mi>U</mi><mo>=</mo> <mfenced open='['  close=']' ><mrow><msub><mrow><mi>u</mi></mrow><mrow><mn>1</mn></mrow></msub><mi>,</mi><msub><mrow><mi>u</mi></mrow><mrow><mn>2</mn></mrow></msub><mi>.</mi><mi>.</mi><mi>.</mi><msub><mrow><mi>u</mi></mrow><mrow><mi>n</mi></mrow></msub></mrow></mfenced><mo>&#8712;</mo><msup><mrow><mi>R</mi></mrow><mrow><mrow><mi>n</mi><mo>&#215;</mo><mi>m</mi></mrow></mrow></msup></mrow></math>
+            is matrix of eigen vectors and 	
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow><mi>&#923;</mi></mrow></math> is a diagonal matrix of corresponding eigen values.
         </p>
+        <p>
+            In graph signal processing, a signal is node feature defined as <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                <mrow><msub><mrow><mi>X</mi></mrow><mrow><mrow><mi>i</mi></mrow></mrow></msub><mi>where </mi><mi>i</mi><mo>&#8712;</mo><mi>[</mi><mi>n</mi><mi>]</mi><mo>(</mo><mi>n is numbers of nodes</mi><mo>)</mo></mrow></math>.
+                <br>The Graph fourier transform to a signal X is :
+                <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                    <mrow><mi>F</mi> <mfenced open='('  close=')' ><mrow><mi>x</mi></mrow></mfenced><mo>=</mo><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><mi>x</mi></mrow></math><br>
+                Inverse graph fourier transform is <img src="https://latex.codecogs.com/gif.latex?F^{-1}\left(\hat{x}\right)=&space;U\hat{x}" title="F^{-1}\left(\hat{x}\right)= U\hat{x}" /> where <a href="https://www.codecogs.com/eqnedit.php?latex=\hat{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\hat{x}" title="\hat{x}" /></a> is resulted signal from graph fourier transform.
+                Here GFT project x into a orthogonal basis formed by eigen vectors of normalized Laplacian. <a href="https://www.codecogs.com/eqnedit.php?latex=\hat{x}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\hat{x}" title="\hat{x}" /></a> contain element in new feature domains. <br> So graph convolution is defined as:
+                <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                    <mrow><msub><mrow><mi>F</mi></mrow><mrow><mrow><mi>G</mi></mrow></mrow></msub><mo>(</mo><mi>x</mi><mo>)</mo><mo>=</mo><mi>x</mi><msub><mrow><mo>*</mo></mrow><mrow><mi>G</mi></mrow></msub><mi>g</mi></mrow></math> where <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                        <mrow><mi>g</mi></mrow></math> is convolution filter.
+                        <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                            <mrow><mi>x</mi><msub><mrow><mo>*</mo></mrow><mrow><mi>G</mi></mrow></msub><mi>g</mi><mo>=</mo><msup><mrow><mi>F</mi></mrow><mrow><mrow><mo>-</mo><mn>1</mn></mrow></mrow></msup><mo>(</mo><mi>F</mi><mo>(</mo><mi>x</mi><mo>)</mo><mo>&#8857;</mo><mi>F</mi><mo>(</mo><mi>g</mi><mo>)</mo><mo>)</mo><mo>=</mo><mi>U</mi><mo>(</mo><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><mi>x</mi><mo>&#8857;</mo><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><mi>g</mi><mo>)</mo></mrow></math>
+                            All graph spectral convolution follow this same mathematical expression with some approximations.
+
+        </p>
+        <h2>
+            Spectral CNN
+        </h2>
+        <p>
+            In paper <a href ="https://arxiv.org/abs/1312.6203">Spectral Network and Deep locally connected network on Graph</a> by Bruna, it is specifically written to 
+            use first d eigen vectors of Laplacian matrix which carry smooth geometry of graph. The cutoff frequency d depends on intrinsic
+            regularity and sample size. Here spectral CNN assumes
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+                <mrow><msub><mrow><mi>g</mi></mrow><mrow><mrow><mi>&#952;</mi></mrow></mrow></msub><mo>=</mo><msubsup><mrow><mi>&#952;
+                </mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msubsup></mrow></math>
+                 is set of learnable parameters and consider graph signal with multiple channels.<br>
+                 Hence the Graph Convolution layer of Spectral CNN is defined as :
+                 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                    <mrow><msubsup><mrow><mi>H</mi></mrow><mrow><mrow><mi>:</mi><mi>,</mi><mi>j</mi></mrow></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msubsup><mo>=</mo><mi>&#963;
+                    </mi><mo>(</mo><msubsup><mrow><mo>&#8721;</mo></mrow><mrow><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msubsup><mi>U</mi><msubsup><mrow><mi>&#952;
+                    </mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msubsup><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><msubsup><mrow><mi>H</mi></mrow><mrow><mrow><mi>:</mi><mi>,</mi><mi>i</mi></mrow></mrow><mrow><mrow><mi>k</mi><mo>-</mo><mn>1</mn></mrow></mrow></msubsup><mo>)</mo><mi> where </mi><mo>(</mo><mi>j</mi><mo>=</mo><mn>1</mn><mi>,</mi><mn>2</mn><mi>,</mi><mi>.</mi><mi>.</mi><mi>.</mi><msub><mrow><mi>f</mi></mrow><mrow><mi>k</mi></mrow></msub><mo>)</mo></mrow></math>
+                    k is the layer index, <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <mrow><msubsup><mrow><mi>H</mi></mrow><mrow><mrow><mi>:</mi><mi>,</mi><mi>j</mi></mrow></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msubsup><mo>=</mo><mi>&#963;</mi><mo>(</mo><msubsup><mrow><mo>&#8721;</mo></mrow><mrow><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msubsup><mi>U</mi><msubsup><mrow><mi>&#952;</mi></mrow><mrow><mrow><mi>i</mi><mi>j</mi></mrow></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msubsup><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><msubsup><mrow><mi>H</mi></mrow><mrow><mrow><mi>:</mi><mi>,</mi><mi>i</mi></mrow></mrow><mrow><mrow><mi>k</mi><mo>-</mo><mn>1</mn></mrow></mrow></msubsup><mo>)</mo><mi>where </mi><mo>(</mo><mi>j</mi><mo>=</mo><mn>1</mn><mi>,</mi><mn>2</mn><mi>,</mi><mi>.</mi><mi>.</mi><mi>.</mi><msub><mrow><mi>f</mi></mrow><mrow><mi>k</mi></mrow></msub><mo>)</mo></mrow></math>
+                         is the input graph signal, <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                            <mrow><msub><mrow><mi>H</mi></mrow><mrow><mrow><mn>0</mn></mrow></mrow></msub><mo>=</mo><mi>X</mi><mi>,</mi><mi></mi><msub><mrow><mi>f</mi></mrow><mrow><mrow><mi>k</mi><mo>-</mo><mn>1</mn></mrow></mrow></msub></mrow></math>      
+                         is number of input channels, 	
+                         <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                         <mrow><msub><mrow><mi>f</mi></mrow><mrow><mrow><mi>k</mi></mrow></mrow></msub></mrow></math> is 
+                         the number of output channels.
+                        </p>
+                        <p>
+                            It has one big problem, eigen value decomposition is too expensive so it must be replaced by some  approximations.
+                        </p>
+
+        <h2>
+            ChebNets or Chebyshev Spectral CNN
+        </h2>
+        <p>
+            Now comes an evolution called ChebNets. It approximate the graph filter  <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                <mrow><msub><mrow><mi>g</mi></mrow><mrow><mrow><mi>&#952;</mi></mrow></mrow></msub></mrow></math>
+                by Chebyshev polynomial.
+                <img src="https://latex.codecogs.com/gif.latex?g_{\theta}&space;=&space;\sum_{i=0}^{K}\theta_iT_i(\hat{\Lambda})" title="g_{\theta} = \sum_{i=0}^{K}\theta_iT_i(\hat{\Lambda})" />
+                where <img src="https://latex.codecogs.com/gif.latex?\hat{\Lambda}&space;=&space;\frac{2\Lambda}{\lambda_{max}}-&space;I_n" title="\hat{\Lambda} = \frac{2\Lambda}{\lambda_{max}}- I_n" />
+                 value of  <img src="https://latex.codecogs.com/gif.latex?\hat{\Lambda}" title="\hat{\Lambda}" /> lie in [-1,1]. <br>
+                 The Chebyshev Polynomial is defined by :<br>
+                 <img src="https://latex.codecogs.com/gif.latex?T_i(x)&space;=&space;2xT_{i-1}(x)&space;-&space;T_{i-2}(x),&space;T_0(x)&space;=&space;1,&space;T_1(x)&space;=&space;x" title="T_i(x) = 2xT_{i-1}(x) - T_{i-2}(x), T_0(x) = 1, T_1(x) = x" />
+                 <br>
+                 As a result new convolution of signal x is defined over filter <math xmlns="http://www.w3.org/1998/Math/MathML" >
+                    <mrow><msub><mrow><mi>g</mi></mrow><mrow><mrow><mi>&#952;</mi></mrow></mrow></msub></mrow></math> is : 
+                    <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;=&space;U(\sum_{i=0}^{K}\theta_{i}T(\hat{\Lambda}))U^Tx" title="x*_Gg_{\theta} = U(\sum_{i=0}^{K}\theta_{i}T(\hat{\Lambda}))U^Tx" /><br>
+              <br> It depends only on nodes that are K-step away from central node (K<sup>th</sup>-order neighbourhood).
+                        Here getting eigen vector matrix U is still expensive, one solution is to use parametrize <img src="https://latex.codecogs.com/gif.latex?g_{\theta}(\hat{L})" title="g_{\theta}(\hat{L})" /> which recursively use L in place of <img src="https://latex.codecogs.com/gif.latex?\Lambda" title="\Lambda" />. 
+                        <br> As we know                     <math xmlns="http://www.w3.org/1998/Math/MathML">
+                            <mrow><mo>(</mo><mi>U</mi><mi>&#923;</mi><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup><msup><mrow><mo>)</mo></mrow><mrow><mi>k</mi></mrow></msup><mo>=</mo><mi>U</mi><msup><mrow><mi>&#923;</mi></mrow><mrow><mi>k</mi></mrow></msup><msup><mrow><mi>U</mi></mrow><mrow><mrow><mi>T</mi></mrow></mrow></msup></mrow></math><br>
+                         
+                        Hence <img src="https://latex.codecogs.com/gif.latex?T(\hat{L})&space;=&space;U^TT({\hat{\Lambda}})U" title="T(\hat{L}) = U^TT({\hat{\Lambda}})U" /> .<br>
+                        Now the Graph Convolution becomes <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;=&space;\sum_{i=0}^{K}\theta_{i}T_i(\hat{L})x" title="x*_Gg_{\theta} = \sum_{i=0}^{K}\theta_{i}T_i(\hat{L})x" /> where <img src="https://latex.codecogs.com/gif.latex?\hat{L}&space;=&space;\frac{2L}{\lambda_{max}}-I_n" title="\hat{L} = \frac{2L}{\lambda_{max}}-I_n" />.<br>
+                        The  Spectrum of Chebnet is mapped to [-1, 1] linearly. It is great improvement over spectral CNN. Also K<sup>th</sup> of Laplacian is exactly K-Localized. Above derivation of expression is too much concentrating as i thought it would be better to show how we remove U which is necessary as it is too expensive to compute.
+
+        </p>
+        <h2>CayleyNets</h2>
+        <p>
+            CayleyNets is another convolution framework over graph. CayleyNets futher applies Cayley polynomials in place of Chebyshev Polynomial. 
+            Cayley polynomials are parametric rationan complex to capture narrow frequency bands.<br>
+            The spectral convolution of CayleyNets is defined as:
+            <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+                <mrow><mi>x</mi><msub><mrow><mo>*</mo></mrow><mrow><mi>G</mi></mrow></msub><msub><mrow><mi>g</mi></mrow><mrow><mrow><mi>&#952;</mi></mrow></mrow></msub><mo>=</mo><msub><mrow><mi>c</mi></mrow><mrow><mn>0</mn></mrow></msub><mi>x</mi><mo>+</mo><mn>2</mn><msub><mrow><mi>R</mi></mrow><mrow><mi>e</mi></mrow></msub> <mfenced open='{'  close='}' ><mrow><msubsup><mrow><mo>&#8721;</mo></mrow><mrow><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow></mrow><mrow><mrow><mi>r</mi></mrow></mrow></msubsup><msub><mrow><mi>c</mi></mrow><mrow><mi>j</mi></mrow></msub><mo>(</mo><mi>h</mi><mi>L</mi><mo>-</mo><mi>i</mi><mi>I</mi><msup><mrow><mo>)</mo></mrow><mrow><mi>j</mi></mrow></msup><mo>(</mo><mi>h</mi><mi>L</mi><mo>+</mo><mi>i</mi><mi>I</mi><msup><mrow><mo>)</mo></mrow><mrow><mrow><mo>-</mo><mi>j</mi></mrow></mrow></msup><mi>x</mi></mrow></mfenced></mrow></math>
+            <img src="https://latex.codecogs.com/gif.latex?R_e(.)" title="R_e(.)" /> is real part of complex numbers.<br>
+            <img src="https://latex.codecogs.com/gif.latex?c_0" title="c_0" /> is real coefficient.<br>
+            <img src="https://latex.codecogs.com/gif.latex?c_j" title="c_j" /> is complex coeffiecient.<br>
+            <img src="https://latex.codecogs.com/gif.latex?h" title="h" /> control the spectrum of Cayley filter.
+
+        </p>
+        <h2>Graph Convolutional Network</h2>
+        <p>Now we come to most simpler part of convolution on graph which is easy to understand and apply. Although CayleyNets works well nut its too complex equation to understand.
+            It introduces first order approximation of ChebNets.<br>
+        As we know in last post that Chebnets equation is given by : <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;=&space;\sum_{i=0}^{K}\theta_{i}T_i(\hat{L})x" title="x*_Gg_{\theta} = \sum_{i=0}^{K}\theta_{i}T_i(\hat{L})x" /> <br>
+        Setting K = 1, we have <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;=&space;\sum_{i=0}^{1}\theta_{i}T_i(\hat{L})x" title="x*_Gg_{\theta} = \sum_{i=0}^{1}\theta_{i}T_i(\hat{L})x" /> <br>
+        From Chebyshev polynomial defined in ChebNets section we know that <img src="https://latex.codecogs.com/gif.latex?T_0{x}&space;=1,&space;T_1(x)&space;=x" title="T_0{x} =1, T_1(x) =x" /><br>
+        Expanding above equation we get :<br>
+         <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;\Rightarrow&space;\sum_{i=0}^{1}\theta_iT(\hat{L})x&space;" title="x*_Gg_{\theta} = \sum_{i=0}^{1}\theta_iT(\hat{L})x \Rightarrow\theta_0T_0(\hat{L})x+\theta_1T_1(\hat{L})x" /><br>
+         <img src="https://latex.codecogs.com/gif.latex?\Rightarrow\theta_0T_0(\hat{L})x&plus;\theta_1T_1(\hat{L})x" title="\Rightarrow\theta_0T_0(\hat{L})x+\theta_1T_1(\hat{L})x" /><br>
+        <a href="https://www.codecogs.com/eqnedit.php?latex==\theta_0x&plus;\theta_1(\hat{L})x" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Rightarrow\theta_0x&plus;\theta_1(\hat{L})x" title="=\theta_0x+\theta_1(\hat{L})x" /></a><br>
+        <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;\theta_0x&plus;\theta_1(I_n-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x&space;" title="\Rightarrow \theta_0x+\theta_1(I_n-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x" /><br>
+        <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;(\theta_0&plus;\theta_1)x&space;-&space;\theta_1D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" title="\Rightarrow (\theta_0+\theta_1)x - \theta_1D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" /><br>
+        An assumption  <img src="https://latex.codecogs.com/gif.latex?\theta&space;=&space;\theta_0&space;=&space;-\theta_1" title="\theta = \theta_0 = -\theta_1" />, has been taken to reduce the parameters from overfitting<br>
+        So overall equation for Graph Convoluion reduced to  : <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" title="\Rightarrow D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" />
+        
+    </p>
+
+        <h2>
+            Some results and analysis
+        </h2>
+        <div>
+            <img src = "blog1/Screenshot 2021-04-18 at 2.50.29 PM.png" width=550px />
+
+
+        </div>
+        <h2>
+            Special points about GCN
+        </h2>
+        <ul>
+            <li>
+                From results and analysis section, good results is found by stacking 2 layers,
+                 more than that cause either no change or overfitting.
+            </li>
+            <li>
+                In random graphs, one can have maximum of diameter of 6 which restrict us not to use more layer of GCN 
+                as it will make all nodes feature alike.
+            </li>
+        </ul>
+
+        <h2>
+            Problems with spectral domains
+        </h2>
+        <ul>
+            <li>Highly complex and inefficient, although GCN is effiecient.</li>
+            <li>Spectral models rely on graph fourier basis which generalises poorly on new graphs. 
+                They assume fixed graph, any peturbation would change the eigen basis.
+            </li>
+            <li>
+                Spectral models are only used for undirected graphs, so flexibilty remains less as can't be used for other types of graphs.
+            </li>
+        </ul>
         
         <h2>
             Conclusions
         </h2>
+        <p>
+            I tried to be flexible, only covering graph convolution related with spectral domains. 
+            Some part of the post are more theoritical which are not understandable in one go, for that i have mark some paper in references.
+            I don't go through other parts like training. All models are trained in similar fashion like simple neural network with backpropagation and cross entropy as loss functions.
+            In some other post, i will go through in details about practical applications of graph.
+        </p>
+        <p>
+            There are other algorithms in graph machine learning not originated in spectral domains like random walks based method e.g. Deepwalk, Node2vec, SDNE, LINE etc.
+
+        </p>
 
     </div>
 
@@ -209,6 +421,7 @@ th,td{
             A Tutorial on Spectral Clustering
             </a> by Luxburg.
         <br>
+        <a href ="https://arxiv.org/abs/1312.6203" >Spectral Network and Deep locally connected network on Graph</a>by Bruna
     </div>
 
   
