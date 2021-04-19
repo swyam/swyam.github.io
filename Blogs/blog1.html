@@ -156,7 +156,7 @@ th,td{
     </div>
   </nav>
 <div class="header mt-2">
-  <h2>Convolution on Graphs(spectral Domains)</h2>
+  <h2>Evolution of Convolution on Graphs(spectral Domains)</h2>
  
 </div>
 
@@ -406,6 +406,11 @@ th,td{
              In the original paper of  <a href = "https://arxiv.org/pdf/1609.02907.pdf">GCN by Thomas Kipf</a>, ReLu is used as Non-linear activation function. In paper <a href = "https://arxiv.org/pdf/1902.07153.pdf">SGC(Simplifying-GCN </a>, it is written that non-linear function contribution to actual performance is very less, main contribution comes from local averaging of node features. 
              By doing this way they have shown to reduce the complexity too much resulting in too less training time(as linear classifier trained easily in less time ) and above or at par performance than original GCN. 
         </p>
+        <div>
+            <img src="./blog1/Screenshot 2021-04-20 at 12.02.43 AM.png" width=800px/>
+            <p class = 'captioned'>this figure is taken from <a href="https://arxiv.org/pdf/1902.07153.pdf">SGC paper</a>
+            , It tells us about the how SGC and GCN works</p>
+        </div>
         <p>
             There are some other modificatios of GCN like Large-Scale Learnable Graph Convolutional Networks, Attention-based graph convolutional networks, Dynamic Graph Convolutional Network etc. which we will not discuss here.
         </p>
@@ -416,7 +421,60 @@ th,td{
             Some results and analysis
         </h2>
         <div>
-            <img src = "blog1/Screenshot 2021-04-18 at 2.50.29 PM.png" width=550px />
+            <img src = "blog1/Screenshot 2021-04-18 at 2.50.29 PM.png" width=800px />
+            <p class = 'captioned'>This image is taken from GCN paper(mentioned in reference). <br>It show how the performance vary with respect to number of layers on 3 data sets Cora, Citeseer, and Pubmed.</p>
+            <p>
+                We can see from the figure that stacking large numbers of GCN layer make the model overfit on all dataset, this is due to high complexity. The best result is when two layers are stacked togethers. For GCN layer stacked greater than 2, perfomance either remain constant or got overfit. 
+                For count of GCN layers less than 2, model got underfit.
+            </p>
+            <img src = "blog1/Screenshot 2021-04-18 at 2.52.30 PM.png" width=800px/>
+            <img src = "blog1/Screenshot 2021-04-18 at 3.00.39 PM.png" width=800px/>
+            <img src="blog1/Screenshot 2021-04-18 at 3.00.50 PM.png" width=800px/>
+            <img src = "blog1/Screenshot 2021-04-18 at 3.01.02 PM.png" width=800px />
+            <p class='captioned'>This image taken from GCN paper. It show how embedding on dataset mentioned Karate Club<br> projections change as GCN get trained with respect to iterations</p>
+            <p>Above image shows the embedding projections of nodes in Karate club graph. As GCN got trained, the similar nodes are 
+                getting more closer. Movement of forming clusters can be notice with respect to iterations.
+            </p>
+            <div>
+                <strong>Performance of different Frameworks using Graph Convolution in spectral domain on the 3 dataset mention in table below</strong></div>
+                <div class="two">
+            <table>
+                <tr>
+                    <th>Framework</th>
+                    <th>Accuracy on Cora Dataset</th>
+                    <th>Accuracy on Citeseer Dataset</th>
+                    <th>Accuracy on Pubmed Dataset</th>
+                </tr>
+                <tr>
+                    <td>ChebNets</td>
+                    <td>81.2%</td>
+                    <td>69.8%</td>
+                    <td>74.4%</td>
+                </tr>
+                <tr>
+                    <td>GCN</td>
+                    <td>81.5%</td>
+                    <td>70.3%</td>
+                    <td>79%</td>
+                </tr>
+                <tr>
+                    <td>CayleyNets</td>
+                    <td>81.9%</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>SGC</td>
+                    <td>81%</td>
+                    <td>71.9</td>
+                    <td>78.9%</td>
+                </tr>
+            </table>
+            <p>The result mention taken from standard papers result portions like GCN, SGC, GAT etc. From result we can see that GCN improvement
+                make the perfomance increased by some points with respect to ChebNets. CayleyNets is better than GCN on Cora. Lastly SGC mentioned above
+                is at par with respect to GCN with too much reduced complexity and faster training.
+            </p>
+          </div>
 
 
         </div>
@@ -475,16 +533,21 @@ th,td{
         <a href = "https://arxiv.org/pdf/1609.02907.pdf">GCN by Thomas Kipf</a>
         <br>
         <a href = "https://arxiv.org/pdf/1902.07153.pdf"> SGC(Simplifying-GCN) </a> by Wu.
+        <br>
+        <a href ="https://arxiv.org/abs/1901.00596"> A Comprehensive Survey on Graph Neural
+            Networks</a> by Z. Wu
+        <br>
+        <a href="https://arxiv.org/pdf/1606.09375.pdf">Convolutional Neural Networks on Graphs
+            with Fast Localized Spectral Filtering</a> by Michaël Defferrard
     </div>
 
   
     
     <div class="card">
       <h2>
-        From
-      </h2>
-      <p>Swyam Prakash Singh</p>
-      <p>ML enthusiast</p>
+        From 
+    </h2>
+      <p>Swyam Prakash Singh, ML enthusiast</p>
     </div>
  
 </div>
