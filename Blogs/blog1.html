@@ -92,6 +92,10 @@ left: 80vw;
    align-items: left;
    margin: 20px;
 }
+.equation {
+    /* border: 10px solid red; */
+    margin-left: 200px;
+}
 
 /* Clear floats after the columns */
 .row:after {
@@ -124,6 +128,7 @@ th,td{
   margin-top: 2%;
   margin-bottom: 2%;
 }
+
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
   .leftcolumn, .rightcolumn {   
@@ -347,21 +352,65 @@ th,td{
 
         </p>
         <h2>Graph Convolutional Network</h2>
-        <p>Now we come to most simpler part of convolution on graph which is easy to understand and apply. Although CayleyNets works well nut its too complex equation to understand.
+        <p>
+            Now we come to most simpler part of convolution on graph which is easy to understand and apply. Although CayleyNets works well nut its too complex equation to understand.
             It introduces first order approximation of ChebNets.<br>
         As we know in last post that Chebnets equation is given by : <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;=&space;\sum_{i=0}^{K}\theta_{i}T_i(\hat{L})x" title="x*_Gg_{\theta} = \sum_{i=0}^{K}\theta_{i}T_i(\hat{L})x" /> <br>
         Setting K = 1, we have <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;=&space;\sum_{i=0}^{1}\theta_{i}T_i(\hat{L})x" title="x*_Gg_{\theta} = \sum_{i=0}^{1}\theta_{i}T_i(\hat{L})x" /> <br>
         From Chebyshev polynomial defined in ChebNets section we know that <img src="https://latex.codecogs.com/gif.latex?T_0{x}&space;=1,&space;T_1(x)&space;=x" title="T_0{x} =1, T_1(x) =x" /><br>
+        </p>
         Expanding above equation we get :<br>
+        <div class = 'equation'>
          <img src="https://latex.codecogs.com/gif.latex?x*_Gg_{\theta}&space;\Rightarrow&space;\sum_{i=0}^{1}\theta_iT(\hat{L})x&space;" title="x*_Gg_{\theta} = \sum_{i=0}^{1}\theta_iT(\hat{L})x \Rightarrow\theta_0T_0(\hat{L})x+\theta_1T_1(\hat{L})x" /><br>
          <img src="https://latex.codecogs.com/gif.latex?\Rightarrow\theta_0T_0(\hat{L})x&plus;\theta_1T_1(\hat{L})x" title="\Rightarrow\theta_0T_0(\hat{L})x+\theta_1T_1(\hat{L})x" /><br>
-        <a href="https://www.codecogs.com/eqnedit.php?latex==\theta_0x&plus;\theta_1(\hat{L})x" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Rightarrow\theta_0x&plus;\theta_1(\hat{L})x" title="=\theta_0x+\theta_1(\hat{L})x" /></a><br>
-        <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;\theta_0x&plus;\theta_1(I_n-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x&space;" title="\Rightarrow \theta_0x+\theta_1(I_n-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x" /><br>
-        <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;(\theta_0&plus;\theta_1)x&space;-&space;\theta_1D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" title="\Rightarrow (\theta_0+\theta_1)x - \theta_1D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" /><br>
+         <a href="https://www.codecogs.com/eqnedit.php?latex==\theta_0x&plus;\theta_1(\hat{L})x" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Rightarrow\theta_0x&plus;\theta_1(\hat{L})x" title="=\theta_0x+\theta_1(\hat{L})x" /></a><br>
+         <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;\theta_0x&plus;\theta_1(I_n-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x&space;" title="\Rightarrow \theta_0x+\theta_1(I_n-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x" /><br>
+         <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;(\theta_0&plus;\theta_1)x&space;-&space;\theta_1D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" title="\Rightarrow (\theta_0+\theta_1)x - \theta_1D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" />
+        </div>
+        <br>
+        <br>
+        <p>
         An assumption  <img src="https://latex.codecogs.com/gif.latex?\theta&space;=&space;\theta_0&space;=&space;-\theta_1" title="\theta = \theta_0 = -\theta_1" />, has been taken to reduce the parameters from overfitting<br>
-        So overall equation for Graph Convoluion reduced to  : <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" title="\Rightarrow D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" />
+        So overall equation for Graph Convolution reduced to  : <img src="https://latex.codecogs.com/gif.latex?\Rightarrow&space;D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" title="\Rightarrow D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x" />
+        </p>
+        <p>
+            One more thing left is self loop, so when we include self loop new Adjacency matrix is :  <img src="https://latex.codecogs.com/gif.latex?\hat&space;A&space;=&space;A&plus;I_n" title="\hat A = A+I_n" />
+            <br>
+            Now <img src="https://latex.codecogs.com/gif.latex?D^{-\frac{1}{2}}\hat&space;AD^{-\frac{1}{2}}" title="D^{-\frac{1}{2}}\hat AD^{-\frac{1}{2}}" /> has eigen values in [0, 2], repeated operation of this can lead to numerical 
+            instabilities along with exploding and vanishing gradient when used in Deep Neural Network models.
+        </p>
+        <p>
+            To alleviate this problem, Renormalisation trick is used. In Renormalisation trick, we replace <img src="https://latex.codecogs.com/gif.latex?D" title="D" /> with <img src="https://latex.codecogs.com/gif.latex?\hat&space;D" title="\hat D" />
+            where <img src="https://latex.codecogs.com/gif.latex?\hat&space;D" title="\hat D" /> is defined as: <img src="https://latex.codecogs.com/gif.latex?\hat&space;D_i&space;=&space;\sum_{j&space;=0}^{n-1}\hat&space;A_{ij}" title="\hat D_i = \sum_{j =0}^{n-1}\hat A_{ij}" />
+            and <img src="https://latex.codecogs.com/gif.latex?\hat&space;A" title="\hat A" /> is new Adjacency matrix.
+        </p>
+        <p>Now the main graph convolution expression with all improvement is: <br>
+            <img src="https://latex.codecogs.com/gif.latex?Z&space;=&space;\hat&space;D^{-\frac{1}{2}}\hat&space;A&space;\hat&space;D^{-\frac{1}{2}}X\theta" title="Z = \hat D^{-\frac{1}{2}}\hat A \hat D^{-\frac{1}{2}}X\theta" />
+            <br>
+            <img src="https://latex.codecogs.com/gif.latex?Z&space;\in&space;R^{N\times&space;F}" title="Z \in R^{N\times F}" /> is convolved signal matrix.
+            <br>
+            <img src="https://latex.codecogs.com/gif.latex?\hat&space;Ax" title="\hat Ax" /> can be efficiently implemented as product of sparse matrix with dense matrix.
+
+        </p>
+        <br>
+        <p> The whole derivation might be confusing for first time. If going by simple intution we know that a  a classifier
+            (may be shallow neural network or Logistic classifier) can be <img src="https://latex.codecogs.com/gif.latex?f(\theta&space;x)" title="f(\theta x)" /> where f is some non linear function like sigmoid/Relu/Softmax etc, <img src="https://latex.codecogs.com/gif.latex?\theta" title="\theta" />
+            is learnable parameters(weights) and <img src="https://latex.codecogs.com/gif.latex?x" title="x" /> is the feature vector.
+            <br><br>
+            In GCN we simply replace <img src="https://latex.codecogs.com/gif.latex?x" title="x" /> with  <img src="https://latex.codecogs.com/gif.latex?\hat&space;Ax" title="\hat Ax" />. By doing this we are aggregating all the features of nodes in neighbourhood. Some nodes has small number of neighbours while 
+            some has large neighbourhood, so aggregated features may not scale properly, hence we used normalised Laplacian to make them in same range.
+            <br>
+            <br>
+            <img src="https://latex.codecogs.com/gif.latex?f(\theta&space;\hat&space;D^{-\frac{1}{2}}_{i}\hat&space;A_{ij}\hat&space;D^{-\frac{1}{2}_{i}}X)\Rightarrow&space;f(\theta&space;\frac{1}{n_i}\sum_{j&space;\in&space;N(i)\cup&space;i}x_j)" title="f(\theta \hat D^{-\frac{1}{2}}_{i}\hat A_{ij}\hat D^{-\frac{1}{2}_{i}}X)\Rightarrow f(\theta \frac{1}{n_i}\sum_{j \in N(i)\cup i}x_j)" />
+             this equation is showing us that we are simply taking aggregate mean of node features along with neighbour's node features. This equation is first order approximation of ChebNet with some improvement. It is the expression for single layer of Graph Convolution Networks. To get K<sup>th</sup> order Graph Convolution filter we can stack K layers of GCN. K layer of GCN stacking is simply like K layer MLP.<br><br>
+             In the original paper of  <a href = "https://arxiv.org/pdf/1609.02907.pdf">GCN by Thomas Kipf</a>, ReLu is used as Non-linear activation function. In paper <a href = "https://arxiv.org/pdf/1902.07153.pdf">SGC(Simplifying-GCN </a>, it is written that non-linear function contribution to actual performance is very less, main contribution comes from local averaging of node features. 
+             By doing this way they have shown to reduce the complexity too much resulting in too less training time(as linear classifier trained easily in less time ) and above or at par performance than original GCN. 
+        </p>
+        <p>
+            There are some other modificatios of GCN like Large-Scale Learnable Graph Convolutional Networks, Attention-based graph convolutional networks, Dynamic Graph Convolutional Network etc. which we will not discuss here.
+        </p>
         
-    </p>
+    
 
         <h2>
             Some results and analysis
@@ -421,7 +470,11 @@ th,td{
             A Tutorial on Spectral Clustering
             </a> by Luxburg.
         <br>
-        <a href ="https://arxiv.org/abs/1312.6203" >Spectral Network and Deep locally connected network on Graph</a>by Bruna
+        <a href ="https://arxiv.org/abs/1312.6203" >Spectral Network and Deep locally connected network on Graph</a> by Bruna.
+        <br>
+        <a href = "https://arxiv.org/pdf/1609.02907.pdf">GCN by Thomas Kipf</a>
+        <br>
+        <a href = "https://arxiv.org/pdf/1902.07153.pdf"> SGC(Simplifying-GCN) </a> by Wu.
     </div>
 
   
